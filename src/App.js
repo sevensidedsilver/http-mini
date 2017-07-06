@@ -1,10 +1,21 @@
 import React, { Component } from 'react';
 import './styles/App.css';
+import {getEnemies} from './services/enemies'
 
-
+getEnemies().then(enemies=> {
+  console.log(enemies)
+}
 class App extends Component {
 
 
+  constructor(props) {
+    super(props)
+    
+    this.state = {
+      enemies: []
+    
+    }
+  }
 
 
   seeEnemies() {
@@ -25,6 +36,14 @@ class App extends Component {
 
 
   render() {
+    const enemies = this.state.enemeies.map((enemy, i) => (
+        <ul className="army">
+          <h3>
+            Enemy Army #{enemy.id}: {enemy.name}
+          </h3>
+  
+        </ul>
+          ))
 
 
     const message = this.state && this.state.armiesArray.length < 1 ? "ALL CLEAR" : "";
@@ -66,11 +85,9 @@ class App extends Component {
 
         {/* Enemy Armies */}
         <div className="enemies">
-
+           {enemies}
         </div>
       </div>
     );
   }
 }
-
-export default App;
